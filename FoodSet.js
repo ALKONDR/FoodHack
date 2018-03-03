@@ -1,7 +1,7 @@
 export default class FoodSet {
     constructor() {
         this.sets = require('./all-food').content;
-        this.products = require('./goods').content;
+        this.categories = require('./goods.json').categories;
 
         this.favouriteProducts = [];
         this.hatedProducts = []
@@ -23,7 +23,23 @@ export default class FoodSet {
         this.hatedProducts.splice(this.hatedProducts.indexOf(product), 1);
     }
 
-    getSet() {
+    getSetNames() {
+        return this.sets.map(cont => cont.type);
+    }
+
+    getSetRecipes(set) {
+        return this.sets.find(rec => rec.type === set).content;
+    }
+
+    getFoodCategories() {
+        return Object.keys(this.categories);
+    }
+
+    getCategoryFood(category) {
+        return this.categories[category];
+    }
+
+    getBestSet() {
         const goodSets = [];
 
         this.sets.forEach(set => {
