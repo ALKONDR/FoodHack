@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     "content": [
         {
             "type": "Классическое",
@@ -8,7 +8,7 @@ export default {
                     "time": 35,
                     "weight": 450,
                     "image": "https://storage.partiyaedi.ru/images/5fybv7rs2v.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Треска: 360 г
                         Фасоль стручок: 400 г
                         Лимон: 100 г
@@ -21,14 +21,13 @@ export default {
                         Имбирь молотый: 2 г
                         Пергамент: 1 шт
                         Базилик красный: 10 г`
-                    ]
                 },
                 {
                     "name": "Оладьи из курицы с рисом и овощным томатным соусом",
                     "time": 30,
                     "weight": 470,
                     "image": "https://storage.partiyaedi.ru/images/oqbc22fohw.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Чеснок: 10 г
                         Куриная грудка: 350 г
                         Помидоры: 1 шт
@@ -37,14 +36,13 @@ export default {
                         Соус овощной с травами: 140 г
                         Яйцо : 1 шт
                         Мука: 20 г`
-                    ]
                 },
                 {
                     "name": "Английский бифштекс с мини-картофелем и травами",
                     "time": 40,
                     "weight": 480,
                     "image": "https://storage.partiyaedi.ru/images/9fvjevj73c.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Тимьян: 4 г
                         Говяжий фарш: 300 г
                         Чеснок: 20 г
@@ -55,14 +53,13 @@ export default {
                         Фольга пищевая: 1 шт
                         Пергамент: 1 шт
                         Свежая зелень (укроп и петрушка): 20 г`
-                    ]
                 },
                 {
                     "name": "Спагетти со свиной вырезкой, грибами и вялеными томатами",
                     "time": 25,
                     "weight": 440,
                     "image": "https://storage.partiyaedi.ru/images/kmuk54s71p.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Спагетти: 200 г
                         Свиная вырезка: 350 г
                         Помидоры: 1 шт
@@ -73,14 +70,13 @@ export default {
                         Кунжут жареный: 2 г
                         Тимьян: 4 г
                         Прованские травы: 2 г`
-                    ]
                 },
                 {
                     "name": "Медальоны из телятины с овощным миксом и соусом на белом вине",
                     "time": 30,
                     "weight": 420,
                     "image": "https://storage.partiyaedi.ru/images/1m33pklq04.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Брокколи: 400 г
                         Телятина вырезка: 350 г
                         Морковь: 1 шт
@@ -89,14 +85,13 @@ export default {
                         Белое вино: 50 г
                         Розмарин : 4 г
                         Перец розе: 2 г`
-                    ]
                 },
                 {
                     "name": "Индейка sous vide с овощным рагу в соусе терияки",
                     "time": 30,
                     "weight": 440,
                     "image": "https://storage.partiyaedi.ru/images/qehdgo424s.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Морковь: 1 шт
                         Индейка грудка sous vide: 350 г
                         Тимьян: 4 г
@@ -105,14 +100,13 @@ export default {
                         Картофель : 400 г
                         Соус терияки: 150 г
                         Розмарин : 4 г`
-                    ]
                 },
                 {
                     "name": "Свиные рёбра в пикантном соусе с жареной капустой",
                     "time": 30,
                     "weight": 560,
                     "image": "https://storage.partiyaedi.ru/images/2y9htrynwp.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Свинина ребра: 600 г
                         Капуста квашеная: 400 г
                         Капуста красная: 310 г
@@ -123,7 +117,6 @@ export default {
                         Кунжут жареный: 4 г
                         Паприка копчёная: 2 г
                         Фольга пищевая: 1 шт`
-                    ]
                 },
             ]
         },
@@ -135,20 +128,19 @@ export default {
                     "time": 25,
                     "weight": 380,
                     "image": "https://storage.partiyaedi.ru/images/55ozn881wy.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Брокколи: 250 г
                         Тушка кальмара: 250 г
                         Помидоры: 1 шт
                         Паста живая феттучини: 250 г
                         Сливки 22% : 100 г`
-                    ]
                 },
                 {
                     "name": "Куриная грудка в специях с рисом и овощным салатом",
                     "time": 25,
                     "weight": 380,
                     "image": "https://storage.partiyaedi.ru/images/xf4t24eldk.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Помидоры: 1 шт
                         Куриная грудка: 360 г
                         Огурец: 1 шт
@@ -156,14 +148,13 @@ export default {
                         Салат: 50 г
                         Редис : 60 г
                         Тандури: 4 г`
-                    ]
                 },
                 {
                     "name": "Мясной рулет с толчёным картофелем и зеленью",
                     "time": 25,
                     "weight": 390,
                     "image": "https://storage.partiyaedi.ru/images/owlymis92u.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Пергамент: 1 шт
                         Говяжий фарш: 300 г
                         Огурец: 1 шт
@@ -172,14 +163,13 @@ export default {
                         Яйцо : 2 шт
                         Свежая зелень (укроп и петрушка): 20 г
                         Перец розе: 2 г`
-                    ]
                 },
                 {
                     "name": "Пицца на кефире с шинкой, моцареллой и маслинами",
                     "time": 25,
                     "weight": 370,
                     "image": "https://storage.partiyaedi.ru/images/ayvd8ifhl8.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Шинка: 200 г
                         Кефир 2,5%: 300 г
                         Помидоры: 1 шт
@@ -190,14 +180,13 @@ export default {
                         Маслины: 40 г
                         Сода: 2 г
                         Пергамент: 1 шт`
-                    ]
                 },
                 {
                     "name": "Свиные отбивные под моцареллой с гречкой и горчичным соусом",
                     "time": 25,
                     "weight": 370,
                     "image": "https://storage.partiyaedi.ru/images/xehhmqu6xw.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Карбонад: 400 г
                         Фольга пищевая: 1 шт
                         Гречка: 250 г
@@ -205,14 +194,13 @@ export default {
                         Помидоры: 1 шт
                         Брокколи: 150 г
                         Моцарелла: 80 г`
-                    ]
                 },
                 {
                     "name": "Печёные куриные окорочка sous vide с кускусом",
                     "time": 25,
                     "weight": 420,
                     "image": "https://storage.partiyaedi.ru/images/1l2orl8262.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Кускус: 200 г
                         Курица окорок sous vide: 700 г
                         Пергамент: 1 шт
@@ -221,14 +209,13 @@ export default {
                         Соус карри нежный: 100 г
                         Базиликовый оливковый дрессинг: 40 г
                         Кунжут жареный: 2 г`
-                    ]
                 },
                 {
                     "name": "Митболы с картофельными слайсами и кукурузой",
                     "time": 25,
                     "weight": 400,
                     "image": "https://storage.partiyaedi.ru/images/r51mp5lgvs.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Говяжий фарш: 400 г
                         Картофель : 800 г
                         Кукуруза в початках: 1 шт
@@ -236,7 +223,6 @@ export default {
                         Лук: 1 шт
                         Соус томатный итальянский: 100 г
                         Розмарин : 4 г`
-                    ]
                 },
             ]
         },
@@ -248,7 +234,7 @@ export default {
                     "time": 25,
                     "weight": 390,
                     "image": "https://storage.partiyaedi.ru/images/8yh92l5jdz.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Спагетти: 200 г
                         Болгарский перец: 1 шт
                         Брокколи: 150 г
@@ -258,14 +244,13 @@ export default {
                         Шампиньоны: 100 г
                         Базилик сушеный: 2 г
                         Чеснок: 20 г`
-                    ]
                 },
                 {
                     "name": "Лобио по-деревенски с миксом овощей и аджикой",
                     "time": 25,
                     "weight": 390,
                     "image": "https://storage.partiyaedi.ru/images/xcsiv92so2.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Тыква: 400 г
                         Фасоль стручок: 350 г
                         Морковь: 1 шт
@@ -274,14 +259,13 @@ export default {
                         Грецкие орехи: 50 г
                         Чеснок: 20 г
                         Смесь специй (уцхо-сунели, аджика сухая): 1 шт`
-                    ]
                 },
                 {
                     "name": "Тыквенный карри с цукини и стучковым горошком",
                     "time": 30,
                     "weight": 410,
                     "image": "https://storage.partiyaedi.ru/images/ixg0wmmd94.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Тыква: 400 г
                         Цукини: 1 шт
                         Помидоры: 1 шт
@@ -289,28 +273,26 @@ export default {
                         Лук: 1 шт
                         Стручковый горох: 50 г
                         Смесь специй (карри, кориандр) : 1 шт`
-                    ]
                 },
                 {
                     "name": "Пряный рис с фисташками и сухофруктами",
                     "time": 25,
                     "weight": 390,
                     "image": "https://storage.partiyaedi.ru/images/z88znbme4x.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Апельсин: 1 шт
                         Рис басмати: 250 г
                         Мята: 10 г
                         Орех фисташки очищенный: 40 г
                         Сухофрукты (курага, изюм, вишня): 1 шт
                         Смесь специй (кардамон, корица) : 1 шт`
-                    ]
                 },
                 {
                     "name": "Груша с булгуром, болгарским перцем и соусом ким чи",
                     "time": 25,
                     "weight": 390,
                     "image": "https://storage.partiyaedi.ru/images/i3cjx1u2qr.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Груша: 1 шт
                         Болгарский перец: 1 шт
                         Булгур: 160 г
@@ -319,14 +301,13 @@ export default {
                         Уксус яблочный: 30 г
                         Сироп кленовый: 30 г
                         Розмарин : 4 г`
-                    ]
                 },
                 {
                     "name": "Гречневая лапша с брюссельской капустой и кукурузой",
                     "time": 30,
                     "weight": 450,
                     "image": "https://storage.partiyaedi.ru/images/iwl0mhfq7z.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Соба: 180 г
                         Капуста брюссельская: 200 г
                         Лук: 1 шт
@@ -334,14 +315,13 @@ export default {
                         Кукуруза (конс.): 130 г
                         Соевый соус: 40 г
                         Куркума и кардамон: 1 шт`
-                    ]
                 },
                 {
                     "name": "Кукурузный крем-суп с гренками",
                     "time": 30,
                     "weight": 450,
                     "image": "https://storage.partiyaedi.ru/images/npk44l6b6t.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Лук: 1 шт
                         Кукуруза (конс.): 250 г
                         Морковь: 1 шт
@@ -351,7 +331,6 @@ export default {
                         Чеснок: 10 г
                         Тимьян: 4 г
                         Корица: 2 г`
-                    ]
                 },
             ]
         },
@@ -363,7 +342,7 @@ export default {
                     "time": 35,
                     "weight": 420,
                     "image": "https://storage.partiyaedi.ru/images/o3cjdfrvxb.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Цукини: 1 шт
                         Филе индейки: 360 г
                         Чеснок: 20 г
@@ -373,14 +352,13 @@ export default {
                         Томаты вяленые: 20 г
                         Водоросли нори: 4 г
                         Зубочистки: 6 шт`
-                    ]
                 },
                 {
                     "name": "Горбуша с красным рисом, морковью и апельсиновым соусом",
                     "time": 40,
                     "weight": 400,
                     "image": "https://storage.partiyaedi.ru/images/abwbh1j6cz.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Имбирь: 10 г
                         Горбуша сырая филе: 400 г
                         Апельсин: 1 шт
@@ -390,14 +368,13 @@ export default {
                         Чеснок: 10 г
                         Кукурузный крахмал: 10 г
                         Пергамент: 1 шт`
-                    ]
                 },
                 {
                     "name": "Куриное филе под шпинатной корочкой с кускусом и соусом аррабиата",
                     "time": 35,
                     "weight": 480,
                     "image": "https://storage.partiyaedi.ru/images/hgz85y2939.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Кускус: 140 г
                         Куриная грудка: 350 г
                         Помидоры: 1 шт
@@ -408,14 +385,13 @@ export default {
                         Розмарин : 4 г
                         Петрушка: 20 г
                         Пергамент: 1 шт`
-                    ]
                 },
                 {
                     "name": "Телятина sous vide с обжаренными овощами и печёным картофелем",
                     "time": 35,
                     "weight": 520,
                     "image": "https://storage.partiyaedi.ru/images/exvqjl6a9d.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Морковь: 1 шт
                         Телятина sous vide: 360 г
                         Моцарелла: 100 г
@@ -427,14 +403,13 @@ export default {
                         Чеснок: 10 г
                         Розмарин : 8 г
                         Пергамент: 1 шт`
-                    ]
                 },
                 {
                     "name": "Мраморная говядина в устричном соусе с зелёной фасолью",
                     "time": 40,
                     "weight": 400,
                     "image": "https://storage.partiyaedi.ru/images/786jhq2c5t.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Чеснок: 10 г
                         Говядина мраморная рибай: 400 г
                         Тимьян: 4 г
@@ -444,14 +419,13 @@ export default {
                         Масло сливочное : 20 г
                         Розмарин : 4 г
                         Фольга пищевая: 1 шт`
-                    ]
                 },
                 {
                     "name": "Венгерский гуляш с говяжьей вырезкой",
                     "time": 40,
                     "weight": 470,
                     "image": "https://storage.partiyaedi.ru/images/us8ao4enes.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Помидоры: 1 шт
                         Говяжья вырезка: 250 г
                         Баклажан: 1 шт
@@ -461,14 +435,13 @@ export default {
                         Чеснок: 10 г
                         Розмарин : 4 г
                         Перец, паприка, тмин, петрушка: 1 шт`
-                    ]
                 },
                 {
                     "name": "Утиная грудка с булгуром, грушей и брусничным вареньем",
                     "time": 30,
                     "weight": 440,
                     "image": "https://storage.partiyaedi.ru/images/rt0gktaphe.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Булгур: 140 г
                         Утиная грудка: 350 г
                         Груша: 1 шт
@@ -477,7 +450,6 @@ export default {
                         Варенье брусничное: 100 г
                         Пергамент: 1 шт
                         Розмарин : 4 г`
-                    ]
                 },
             ]
         },
@@ -489,7 +461,7 @@ export default {
                     "time": 20,
                     "weight": 390,
                     "image": "https://storage.partiyaedi.ru/images/tctf2yyr54.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Брокколи: 350 г
                         Тушка кальмара: 200 г
                         Тигровые креветки: 150 г
@@ -498,14 +470,13 @@ export default {
                         Соус пад тай: 50 г
                         Кунжутное масло: 10 г
                         Кунжут жареный: 2 г`
-                    ]
                 },
                 {
                     "name": "Говяжий язык sous vide в соусе барбекю с пюре из сельдерея",
                     "time": 20,
                     "weight": 440,
                     "image": "https://storage.partiyaedi.ru/images/8nplhvm7eo.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Язык говяжий sous vide: 300 г
                         Сельдерей корень: 500 г
                         Перцы болгарские мини: 2 шт
@@ -513,14 +484,13 @@ export default {
                         Соус барбекю: 70 г
                         Тыквенные семечки: 20 г
                         Микрозелень: 1 шт`
-                    ]
                 },
                 {
                     "name": "Филе-миньон с красной капустой, салатом и соусом ким чи",
                     "time": 20,
                     "weight": 410,
                     "image": "https://storage.partiyaedi.ru/images/04pkt2jyr9.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Чеснок: 10 г
                         Говяжья вырезка: 350 г
                         Салат: 50 г
@@ -530,14 +500,13 @@ export default {
                         Масло оливковое: 20 г
                         Розмарин : 4 г
                         Перец розе дробленый Santa Maria: 2 г`
-                    ]
                 },
                 {
                     "name": "Телячья вырезка с полбой в сливочно-сырном соусе",
                     "time": 20,
                     "weight": 400,
                     "image": "https://storage.partiyaedi.ru/images/j5ieg8un0e.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Полба: 160 г
                         Телятина вырезка: 360 г
                         Горошек: 100 г
@@ -549,14 +518,13 @@ export default {
                         Тимьян: 4 г
                         Фольга пищевая: 1 шт
                         Микрозелень: 1 шт`
-                    ]
                 },
                 {
                     "name": "Утиная грудка с кускусом и соусом из чёрной смородины",
                     "time": 20,
                     "weight": 410,
                     "image": "https://storage.partiyaedi.ru/images/nbf0ybv95j.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Кускус: 160 г
                         Утиная грудка: 360 г
                         Смородина чёрная : 100 г
@@ -564,14 +532,13 @@ export default {
                         Розмарин : 4 г
                         Масло оливковое: 20 г
                         Микс овощей (кукуруза, горошек) : 1 шт`
-                    ]
                 },
                 {
                     "name": "Телячьи щечки sous vide с пюре из брокколи и копчёным сыром",
                     "time": 20,
                     "weight": 460,
                     "image": "https://storage.partiyaedi.ru/images/vnpy5xdyu4.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Брокколи: 500 г
                         Телятина щечки sous vide : 300 г
                         Сливочный сыр: 100 г
@@ -579,14 +546,13 @@ export default {
                         Соус LAVINA (Демиглас): 50 г
                         Тыквенные семечки: 20 г
                         Микрозелень: 1 шт`
-                    ]
                 },
                 {
                     "name": "Баклажаны с помидорами и грибами в соусе том-ям",
                     "time": 20,
                     "weight": 410,
                     "image": "https://storage.partiyaedi.ru/images/9koh3tzsbt.jpg",
-                    "ingredients": [
+                    "ingredients":
                         `Баклажан: 2 шт
                         Помидор черри: 160 г
                         Шампиньоны: 100 г
@@ -597,7 +563,6 @@ export default {
                         Кунжутное масло: 20 г
                         Лемонграсс: 15 г
                         Микрогрин: 1 шт`
-                    ]
                 },
             ]
         }
