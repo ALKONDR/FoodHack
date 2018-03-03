@@ -1,0 +1,22 @@
+{
+  "name": "food-hack",
+  "version": "1.0.0",
+  "description": "Food Hack project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALKONDR/FoodHack.git"
+  },
+  "author": "redtiger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ALKONDR/FoodHack/issues"
+  },
+  "homepage": "https://github.com/ALKONDR/FoodHack#readme",
+  "dependencies": {
+    "telegraf": "^3.19.0"
+  }
+}
