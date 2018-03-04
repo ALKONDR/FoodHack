@@ -1,4 +1,4 @@
-export default class Order {
+class Order {
     constructor() {
         this.numberOfPeople = "2";
         this.numberOfDays = "5";
@@ -7,3 +7,5 @@ export default class Order {
         this.customerName = "Kek Lolovich";
     }
 }
+
+module.exports = Order;
