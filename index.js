@@ -52,7 +52,7 @@ function checkAnother(row, newCheck) {
 }
 
 stage_1.enter((ctx) => {
-        return ctx.reply('Для начала выбери: выбрать ужин самому из меню или дать нам подобрать его по твоим любимым/нелюбимым продуктам',
+        return ctx.reply('Я помогу тебе определиться с ужином😉: собери его по любимым/нелюбимым продуктам, и я сэкономлю твое время🕑 и подберу твой идеальный набор для прекрасного вечера🔥',
             Markup.inlineKeyboard(fromGroupToMD(group))
                 .extra()
         )
@@ -87,11 +87,11 @@ stage_1.on('callback_query', async (ctx, next) => {
 const stage_2 = new Scene('stage_2')
 
 stage_2.enter(async (ctx) => {
-	await ctx.reply('Молодец! Выбери из меню или под себя');
+	await ctx.reply('Молодец! Если ты уверен, что хочешь заказать, то можешь пройти в пункт меню.📔 Если ты хочешь поэксперементировать и найти свой идеальный ужин, то составь меню сам✏️📋');
 	await ctx.reply('Из меню или под себя',
         Markup.inlineKeyboard([
-        	[Markup.callbackButton('Выбрать набор из меню', 'fromMenu')],
-			[Markup.callbackButton('Составь меню под себя', 'selectSet')]
+        	[Markup.callbackButton('Выбрать набор из меню⚡️', 'fromMenu')],
+			[Markup.callbackButton('Составь меню под себя🔥', 'selectSet')]
 		])
             .extra()
     )
@@ -110,11 +110,11 @@ stage_2.action('selectSet', async (ctx, next) => {
 // STAGE 2_1
 const stage_2_1 = new Scene('stage_2_1');
 stage_2_1.enter(async (ctx) => {
-    await ctx.reply('А теперь важная миссия! Получи оргазм или сдохни нахуй');
-    await ctx.reply('Добавь продукты, которые тебе нравятся, или пропусти',
+    await ctx.reply('А теперь важная миссия!💪 Собери свой идеальный набор😋');
+    await ctx.reply('Добавь продукты, которые тебе нравятся😎, или пропусти этот пункт😢',
         Markup.inlineKeyboard([
-            [Markup.callbackButton('Добавить любимые', 'addFav')],
-            [Markup.callbackButton('Продолжить', 'add2Hate')]
+            [Markup.callbackButton('Добавить любимые😍😍😍', 'addFav')],
+            [Markup.callbackButton('Продолжить🔜', 'add2Hate')]
         ])
             .extra()
     )
@@ -221,8 +221,8 @@ stage_2_1.on('callback_query', async (ctx) => {
 // STAGE 2_2
 const stage_2_2 = new Scene('stage_2_2');
 stage_2_2.enter(async (ctx) => {
-    await ctx.reply('Теперь подумай, какие продукты исключить');
-    await ctx.reply('Убери нелюбимые продукты из своего ужина',
+    await ctx.reply('Теперь подумай, какие продукты ты не хочешь видеть в своем ужине😑');
+    await ctx.reply('Убери нелюбимые💩 продукты из своего ужина',
         Markup.inlineKeyboard([
             [Markup.callbackButton('Исключить нелюбимые', 'addHate')],
             [Markup.callbackButton('Без учета нелюбимых продуктов', 'toSetPersonal')]
@@ -255,7 +255,7 @@ function categories2MDh(cats) {
 }
 
 stage_2_2.action('addHate', async (ctx) => {
-    await ctx.reply('Выбери категорию продуктов, которые вам НЕ нравится:',
+    await ctx.reply('Выбери категорию продуктов, которые вам НЕ нравится:🙊',
         Markup.inlineKeyboard(categories2MDh(foodSet.hatedCategoriesArray))
             .extra()
     )
@@ -332,14 +332,21 @@ stage_2_2.on('callback_query', async (ctx) => {
 // STAGE 3
 const stage_3 = new Scene('stage_3');
 
+let globalPrice = 365600;
+let globalSetType = 'Classic';
+
 stage_3.enter((ctx) => {
 	const bestSet = foodSet.getBestSet();
 	let to_write = bestSet.type + '\n\n';
 	to_write += bestSet.content.slice(0, order.numberOfDays).map(rec => `${rec.name}`).join('\n\n');
     let price = allFood.content.find(c => c.type === bestSet.type).price[order.numberOfDays][order.numberOfPeople];
+    invoice.prices[0].amount = price;
+    console.log('globalPrice: ', globalPrice);
+    invoice.description = bestSet.type;
+    console.log('globalType: ', globalSetType);
 	price = String(price).substring(0, String(price).length - 2);
 	to_write += '\n\n Цена: ' + price + ' руб\n';
-	ctx.reply(`Ну вот и здорово! Мы подобрали тебе подходящий набор ужинов по твоим предпочтениям! Посмотри его :) \n\n\n ${to_write} \n\n${bestSet.telegraph}`,
+	ctx.reply(`Ну вот и все! Мы подобрали тебе подходящий набор ужинов по твоим предпочтениям! Посмотри его 😀😘 \n\n\n ${to_write} \n\n${bestSet.telegraph}`,
         Markup.inlineKeyboard([
             [Markup.callbackButton('Заказать!', 'makeOrder'),
             Markup.callbackButton('Поменять набор', 'changeOrderSet')]
@@ -361,7 +368,7 @@ stage_3.action('makeOrder', async (ctx) => {
 // STAGE 4
 const stage_4 = new Scene('stage_4');
 stage_4.enter(async (ctx) => {
-    await ctx.reply('Как я могу с тобой связаться, чтобы доставить вкусняшку? :)',
+    await ctx.reply('Как я могу с тобой связаться, чтобы доставить вкусняшку? 😏',
         Extra.markup((markup) => {
         return markup.resize()
             .keyboard([
@@ -390,21 +397,51 @@ stage_5.enter(async (ctx) => {
 stage_5.on('message', async (ctx) => {
     await  ctx.reply(`Перейти к оплате`);
     await ctx.scene.leave();
-    await ctx.scene.enter('stage_6')
+    await ctx.scene.enter('stage_payment')
 })
 
 // STAGE 6
-const stage_6 = new Scene('stage_6');
-stage_6.enter((ctx) => {
+const stage_payment = new Scene('stage_payment');
 
-})
+const replyOptions = Markup.inlineKeyboard([
+    Markup.payButton('💸 Купить'),
+]).extra();
+
+const invoice = {
+    provider_token: '381764678:TEST:4702',
+    start_parameter: 'partiya-edi-nabor',
+    title: 'Вкуснейший набор от Партии еды',
+    description: "Классическое",
+    currency: 'RUB',
+    photo_url: 'https://storage.partiyaedi.ru/images/v9isei2o8z.jpg',
+    is_flexible: true,
+    prices: [
+        {label: 'Вкуснейший набор от Партии еды', amount: 365600}
+    ],
+    payload: {
+        coupon: 'BLACK FRIDAY'
+    }
+};
+
+const shippingOptions = [
+    {
+        id: 'Tinkoff',
+        title: 'Tinkoff Bank',
+        prices: [{label: 'Tinkoff', amount: 2000}]
+    }
+];
+
+stage_payment.enter(({replyWithInvoice}) => replyWithInvoice(invoice));
+stage_payment.on('shipping_query', ({answerShippingQuery}) => answerShippingQuery(true, shippingOptions));
+stage_payment.on('pre_checkout_query', ({answerPreCheckoutQuery}) => answerPreCheckoutQuery(true));
+stage_payment.on('successful_payment', () => console.log('Woohoo'));
 
 // ------------------------------------------------------------
 // Bot settings
 const bot = new Telegraf(config.token);
 
 const stage = new Stage([
-    stage_1, stage_2, stage_2_menu, stage_2_1, stage_2_2, stage_3, stage_4, stage_5, stage_6
+    stage_1, stage_2, stage_2_menu, stage_2_1, stage_2_2, stage_3, stage_4, stage_5, stage_payment
 ], { ttl: 10 })
 bot.use(session())
 bot.use(stage.middleware())
@@ -412,3 +449,5 @@ bot.use(stage.middleware())
 bot.command('start', enter('stage_1'));
 
 bot.startPolling()
+
+module.exports = stage_4;

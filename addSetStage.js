@@ -7,6 +7,7 @@ const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
 
 const allRecipes = require('./all-food').content;
+const stage_4 = require('./index');
 
 const check = '✔';
 
@@ -99,6 +100,12 @@ module.exports = function addSetStage() {
                 ]
             ]).extra()
         );
+    });
+
+    stage_2_menu.action('continue', async (ctx) => {
+        await ctx.reply('Спасибо за заказ! Давай перейдем к оплате этой вкуснотени❤️');
+        await ctx.scene.leave();
+        await ctx.scene.enter('stage_4');
     });
 
     stage_2_menu.on('callback_query', async (ctx, next) => {

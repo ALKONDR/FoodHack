@@ -14,7 +14,7 @@ module.exports = function addPayment(type, price) {
     ]).extra();
 
     const invoice = {
-        provider_token: '381764678:TEST:4685',
+        provider_token: '381764678:TEST:4702',
         start_parameter: 'partiya-edi-nabor',
         title: 'Вкуснейший набор от Партии еды',
         description: type,
