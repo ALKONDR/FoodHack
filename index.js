@@ -70,7 +70,9 @@ stage_1.on('callback_query', async (ctx, next) => {
 				order.numberOfDays = data.data;
 			} else if (data.group === 'PersonsSetting') {
 				order.numberOfPeople = data.data;
-			}
+			} else {
+			    order.orderDay = data.data;
+            }
             group[data.group] = await checkAnother(group[data.group], data.data);
             return ctx.editMessageReplyMarkup(
                 Markup.inlineKeyboard(fromGroupToMD(group))
@@ -165,6 +167,9 @@ function products2MD(products) {
 	const arr = [];
 	let flag = true;
 	let row = [];
+	if (products === undefined) {
+	    return []
+    }
 	for (const prod of products) {
 		if (foodSet.favouriteProducts.find(k => k === prod) !== undefined) {
 			row.push(Markup.callbackButton(check + prod, prod));
@@ -331,7 +336,6 @@ stage_3.enter((ctx) => {
 	const bestSet = foodSet.getBestSet();
 	let to_write = bestSet.type + '\n\n';
 	to_write += bestSet.content.slice(0, order.numberOfDays).map(rec => `${rec.name}`).join('\n\n');
-	console.log(bestSet)
     let price = allFood.content.find(c => c.type === bestSet.type).price[order.numberOfDays][order.numberOfPeople];
 	price = String(price).substring(0, String(price).length - 2);
 	to_write += '\n\n Цена: ' + price + ' руб\n';
@@ -344,11 +348,64 @@ stage_3.enter((ctx) => {
 	);
 });
 
+stage_3.action('changeOrderSet', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_2_menu');
+});
+
+stage_3.action('makeOrder', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_4')
+})
+
+// STAGE 4
+const stage_4 = new Scene('stage_4');
+stage_4.enter(async (ctx) => {
+    await ctx.reply('Как я могу с тобой связаться, чтобы доставить вкусняшку? :)',
+        Extra.markup((markup) => {
+        return markup.resize()
+            .keyboard([
+                markup.contactRequestButton('Отправить контакт')
+            ])
+    }))
+})
+
+stage_4.on('message', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_5')
+})
+
+// Stage 5
+const stage_5 = new Scene('stage_5');
+stage_5.enter(async (ctx) => {
+    await ctx.reply('Куда мне подъехать?',
+        Extra.markup((markup) => {
+            return markup.resize()
+                .keyboard([
+                    markup.locationRequestButton('Определить геолокацию')
+                ])
+        }))
+})
+
+stage_5.on('message', async (ctx) => {
+    await  ctx.reply(`Перейти к оплате`);
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_6')
+})
+
+// STAGE 6
+const stage_6 = new Scene('stage_6');
+stage_6.enter((ctx) => {
+
+})
+
 // ------------------------------------------------------------
 // Bot settings
 const bot = new Telegraf(config.token);
 
-const stage = new Stage([stage_1, stage_2, stage_2_menu, stage_2_1, stage_2_2, stage_3], { ttl: 10 })
+const stage = new Stage([
+    stage_1, stage_2, stage_2_menu, stage_2_1, stage_2_2, stage_3, stage_4, stage_5, stage_6
+], { ttl: 10 })
 bot.use(session())
 bot.use(stage.middleware())
 

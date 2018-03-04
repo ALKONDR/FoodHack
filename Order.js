@@ -5,6 +5,7 @@ class Order {
         this.setName = "Классическое";
         this.setContent = [];
         this.customerName = "Kek Lolovich";
+        this.orderDay = "5";
     }
 }
 
