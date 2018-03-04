@@ -1,4 +1,4 @@
-{"categories": {
+module.exports = {"categories": {
     "Морепродукты": [
       "Треска",
       "Тушка кальмара",
