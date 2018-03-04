@@ -1,6 +1,14 @@
+const session = require('telegraf/session');
+const Stage = require('telegraf/stage');
+const Scene = require('telegraf/scenes/base');
+const { enter, leave } = Stage;
+
+const Extra = require('telegraf/extra');
 const Markup = require('telegraf/markup');
 
-module.exports = function addPayment(bot) {
+module.exports = function addPayment() {
+    const stage_payment = new Scene('stage_payment');
+
     const replyOptions = Markup.inlineKeyboard([
         Markup.payButton('💸 Купить'),
     ]).extra();
@@ -30,9 +38,11 @@ module.exports = function addPayment(bot) {
         }
     ];
 
-    bot.start(({replyWithInvoice}) => replyWithInvoice(invoice));
-    bot.command('/buy', ({replyWithInvoice}) => replyWithInvoice(invoice, replyOptions));
-    bot.on('shipping_query', ({answerShippingQuery}) => answerShippingQuery(true, shippingOptions));
-    bot.on('pre_checkout_query', ({answerPreCheckoutQuery}) => answerPreCheckoutQuery(true));
-    bot.on('successful_payment', () => console.log('Woohoo'));
+    stage_payment.enter(({replyWithInvoice}) => replyWithInvoice(invoice));
+    // bot.command('/buy', ({replyWithInvoice}) => replyWithInvoice(invoice, replyOptions));
+    stage_payment.on('shipping_query', ({answerShippingQuery}) => answerShippingQuery(true, shippingOptions));
+    stage_payment.on('pre_checkout_query', ({answerPreCheckoutQuery}) => answerPreCheckoutQuery(true));
+    stage_payment.on('successful_payment', () => console.log('Woohoo'));
+
+    return stage_payment;
 };
