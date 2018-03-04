@@ -11,6 +11,11 @@ const config = require('./config');
 const group = require('./orderSettings');
 const FoodSet = require('./FoodSet')
 const foodSet = new FoodSet();
+const stage_2_menu = require('./addSetStage')();
+const Order = require('./Order')
+const order = new Order();
+
+const allFood = require('./all-food');
 
 let approve = [Markup.callbackButton('Продолжить', JSON.stringify({approve: 'true'}))];
 
@@ -56,12 +61,16 @@ stage_1.enter((ctx) => {
 
 stage_1.on('callback_query', async (ctx, next) => {
 	data = JSON.parse(ctx.update.callback_query.data);
-	console.log(data);
 	if (data.approve !== undefined) {
         await ctx.scene.leave();
         await ctx.scene.enter('stage_2');
 	} else {
 		if (!group[data.group][data.data].text.startsWith(check)) {
+			if (data.group === 'DinnerSetting') {
+				order.numberOfDays = data.data;
+			} else if (data.group === 'PersonsSetting') {
+				order.numberOfPeople = data.data;
+			}
             group[data.group] = await checkAnother(group[data.group], data.data);
             return ctx.editMessageReplyMarkup(
                 Markup.inlineKeyboard(fromGroupToMD(group))
@@ -85,6 +94,11 @@ stage_2.enter(async (ctx) => {
             .extra()
     )
 });
+
+stage_2.action('fromMenu', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_2_menu')
+})
 
 stage_2.action('selectSet', async (ctx, next) => {
 	await ctx.scene.leave();
@@ -123,7 +137,7 @@ function categories2MD(cats) {
 	if (row.length !== 0) {
 		arr.push(row);
 	}
-    arr.push([Markup.callbackButton('Идем дальше', 'return2Heated')]);
+    arr.push([Markup.callbackButton('Идем дальше', 'add2Hate')]);
 	return arr;
 }
 
@@ -134,9 +148,9 @@ stage_2_1.action('addFav', async (ctx) => {
     )
 });
 
-stage_2_1.action('return2Heated', async (ctx) => {
+stage_2_1.action('add2Hate', async (ctx) => {
     await ctx.scene.leave();
-    await ctx.scene.enter('stage_2_2')
+	await ctx.scene.enter('stage_2_2')
 });
 
 function selectLikedCategory(cat) {
@@ -259,6 +273,9 @@ function products2MDh(products) {
     const arr = [];
     let flag = true;
     let row = [];
+    if (products === undefined) {
+    	return [];
+	}
     for (const prod of products) {
         if (foodSet.hatedProducts.find(k => k === prod) !== undefined) {
             row.push(Markup.callbackButton(except + prod, prod));
@@ -307,11 +324,31 @@ stage_2_2.on('callback_query', async (ctx) => {
     }
 });
 
+// STAGE 3
+const stage_3 = new Scene('stage_3');
+
+stage_3.enter((ctx) => {
+	const bestSet = foodSet.getBestSet();
+	let to_write = bestSet.type + '\n\n';
+	to_write += bestSet.content.slice(0, order.numberOfDays).map(rec => `${rec.name}`).join('\n\n');
+	console.log(bestSet)
+    let price = allFood.content.find(c => c.type === bestSet.type).price[order.numberOfDays][order.numberOfPeople];
+	price = String(price).substring(0, String(price).length - 2);
+	to_write += '\n\n Цена: ' + price + ' руб\n';
+	ctx.reply(`Ну вот и здорово! Мы подобрали тебе подходящий набор ужинов по твоим предпочтениям! Посмотри его :) \n\n\n ${to_write} \n\n${bestSet.telegraph}`,
+        Markup.inlineKeyboard([
+            [Markup.callbackButton('Заказать!', 'makeOrder'),
+            Markup.callbackButton('Поменять набор', 'changeOrderSet')]
+        ])
+            .extra()
+	);
+});
+
 // ------------------------------------------------------------
 // Bot settings
 const bot = new Telegraf(config.token);
 
-const stage = new Stage([stage_1, stage_2, stage_2_1, stage_2_2], { ttl: 10 })
+const stage = new Stage([stage_1, stage_2, stage_2_menu, stage_2_1, stage_2_2, stage_3], { ttl: 10 })
 bot.use(session())
 bot.use(stage.middleware())
 

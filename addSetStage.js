@@ -11,9 +11,9 @@ const allRecipes = require('./all-food').content;
 const check = '✔';
 
 module.exports = function addSetStage() {
-    const stage_2_1 = new Scene('stage_2_1');
+    const stage_2_menu = new Scene('stage_2_menu');
 
-    stage_2_1.enter(async (ctx) => {
+    stage_2_menu.enter(async (ctx) => {
         await ctx.reply('Выбери свой набор',
             Markup.inlineKeyboard([
                 [Markup.callbackButton('Классический', 'classic')],
@@ -26,7 +26,7 @@ module.exports = function addSetStage() {
         )
     });
 
-    stage_2_1.action('classic', async (ctx, next) => {
+    stage_2_menu.action('classic', async (ctx, next) => {
         const set = await allRecipes.find(rec => rec.type === 'Классическое');
 
         await ctx.reply(`Классический набор \n ${set.telegraph}`,
@@ -41,7 +41,7 @@ module.exports = function addSetStage() {
         );
     });
 
-    stage_2_1.action('family', async (ctx, next) => {
+    stage_2_menu.action('family', async (ctx, next) => {
         const set = await allRecipes.find(rec => rec.type === 'Семейное');
 
         await ctx.reply(`Семейный набор \n ${set.telegraph}`,
@@ -56,7 +56,7 @@ module.exports = function addSetStage() {
         );
     });
 
-    stage_2_1.action('post', async (ctx, next) => {
+    stage_2_menu.action('post', async (ctx, next) => {
         const set = await allRecipes.find(rec => rec.type === 'Постное');
 
         await ctx.reply(`Постный набор \n ${set.telegraph}`,
@@ -71,7 +71,7 @@ module.exports = function addSetStage() {
         );
     });
 
-    stage_2_1.action('premium', async (ctx, next) => {
+    stage_2_menu.action('premium', async (ctx, next) => {
         const set = await allRecipes.find(rec => rec.type === 'Премиум');
 
         await ctx.reply(`Премиум набор \n ${set.telegraph}`,
@@ -86,7 +86,7 @@ module.exports = function addSetStage() {
         );
     });
 
-    stage_2_1.action('fitness', async (ctx, next) => {
+    stage_2_menu.action('fitness', async (ctx, next) => {
         const set = await allRecipes.find(rec => rec.type === 'Фитнес');
 
         await ctx.reply(`Фитнес набор \n ${set.telegraph}`,
@@ -101,7 +101,7 @@ module.exports = function addSetStage() {
         );
     });
 
-    stage_2_1.on('callback_query', async (ctx, next) => {
+    stage_2_menu.on('callback_query', async (ctx, next) => {
         const data = JSON.parse(ctx.update.callback_query.data);
 
         if (data.type) {
@@ -126,5 +126,5 @@ module.exports = function addSetStage() {
         }
     });
 
-    return stage_2_1;
+    return stage_2_menu;
 };
