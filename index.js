@@ -10,7 +10,7 @@ const { enter, leave } = Stage
 const config = require('./config');
 const group = require('./orderSettings');
 
-let approve = [Markup.callbackButton('Подтвердить', JSON.stringify({approve: 'true'}))];
+let approve = [Markup.callbackButton('Продолжить', JSON.stringify({approve: 'true'}))];
 
 const check = '✔';
 
@@ -31,9 +31,9 @@ function fromGroupToMD(group) {
 	return arr;
 }
 
-function checkAnouther(row, newCheck) {
+function checkAnother(row, newCheck) {
 	for (const obj in row) {
-		text = row[`${obj}`].text;
+		let text = row[`${obj}`].text;
 		if (text.startsWith(check)) {
             text = text.substring(1);
 		}
@@ -58,17 +58,30 @@ stage_1.on('callback_query', async (ctx, next) => {
         await ctx.scene.leave();
         await ctx.scene.enter('stage_2');
 	} else {
-		group[data.group] = checkAnouther(data.group, data.data);
-		return ctx.editMessageReplyMarkup(
-            Markup.inlineKeyboard(fromGroupToMD(group))
-		);
+		if (!group[data.group][data.data].text.startsWith(check)) {
+            group[data.group] = await checkAnother(group[data.group], data.data);
+            return ctx.editMessageReplyMarkup(
+                Markup.inlineKeyboard(fromGroupToMD(group))
+            );
+		} else {
+			return ctx;
+		}
 	}
 });
 
 // STAGE 2
 const stage_2 = new Scene('stage_2')
 
-stage_2.enter((ctx) => ctx.reply('lel'));
+stage_2.enter((ctx) => {
+	ctx.reply('Молодец! Выбери из меню или под себя');
+	ctx.reply('Из меню или под себя',
+        Markup.inlineKeyboard([
+        	[Markup.callbackButton('Выбрать набор из меню', 'fromMenu')],
+			[Markup.callbackButton('Составь меню под себя', 'selectSet')]
+		])
+            .extra()
+    )
+});
 
 // ------------------------------------------------------------
 // Bot settings

@@ -1,7 +1,7 @@
 module.exports = {
     DinnerSetting: {
         '3': {
-            text: '✔️3 ужина',
+            text: '✔3 ужина',
             data: JSON.stringify({stage: 'stage_1', group: 'DinnerSetting', data: '3'})
         },
         '5': {
@@ -26,11 +26,11 @@ module.exports = {
     PersonsSetting: {
         '2': {
             text: '✔2 персоны',
-            data: JSON.stringify({stage: 'stage_1', group: 'PersonSetting', data: '2'})
+            data: JSON.stringify({stage: 'stage_1', group: 'PersonsSetting', data: '2'})
         },
         '4': {
             text: '4 персоны',
-            data: JSON.stringify({stage: 'stage_1', group: 'PersonSetting', data: '4'})
+            data: JSON.stringify({stage: 'stage_1', group: 'PersonsSetting', data: '4'})
         }
     }
 
