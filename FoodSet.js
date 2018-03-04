@@ -4,6 +4,9 @@ class FoodSet {
         this.likedCategories = require('./goods').categories;
         this.hatedCategories = require('./goods').categories;
 
+        this.likedCategoriesArray = Object.keys(this.likedCategories);
+        this.hatedCategoriesArray = Object.keys(this.hatedCategories);
+
         this.favouriteProducts = [];
         this.hatedProducts = []
     }
