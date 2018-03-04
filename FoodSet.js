@@ -1,8 +1,10 @@
 class FoodSet {
     constructor() {
         this.sets = require('./all-food').content;
+        this.categories = require('./goods').categories;
         this.likedCategories = require('./goods').categories;
-        this.hatedCategories = require('./goods').categories;
+
+        this.hatedCategories = JSON.parse(JSON.stringify(this.likedCategories));
 
         this.likedCategoriesArray = Object.keys(this.likedCategories);
         this.hatedCategoriesArray = Object.keys(this.hatedCategories);
@@ -12,11 +14,11 @@ class FoodSet {
     }
 
     addFavouriteProduct(product) {
-        this.favouriteProducts.add(product);
+        this.favouriteProducts.push(product);
     }
 
     addHatedProduct(product) {
-        this.hatedProducts.add(product);
+        this.hatedProducts.push(product);
     }
 
     removeFavouriteProduct(product) {
@@ -51,6 +53,14 @@ class FoodSet {
         return this.hatedCategories[category];
     }
 
+    getCategoryByProduct(product) {
+        for (const cat in this.categories) {
+            if (this.categories[cat].indexOf(product) >= 0) {
+                return cat;
+            }
+        }
+    }
+
     getBestSet() {
         const goodSets = [];
 
@@ -66,7 +76,7 @@ class FoodSet {
             });
 
             if (counter === 0) {
-                goodSets.add(set);
+                goodSets.push(set);
             }
         });
 

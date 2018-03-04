@@ -15,6 +15,7 @@ const foodSet = new FoodSet();
 let approve = [Markup.callbackButton('Продолжить', JSON.stringify({approve: 'true'}))];
 
 const check = '✔';
+const except = '✖'
 
 // STAGE 1
 const stage_1 = new Scene('stage_1')
@@ -87,12 +88,12 @@ stage_2.enter(async (ctx) => {
 
 stage_2.action('selectSet', async (ctx, next) => {
 	await ctx.scene.leave();
-	await ctx.scene.enter('stage_2_2')
+	await ctx.scene.enter('stage_2_1')
 });
 
-// STAGE 2_2
-const stage_2_2 = new Scene('stage_2_2');
-stage_2_2.enter(async (ctx) => {
+// STAGE 2_1
+const stage_2_1 = new Scene('stage_2_1');
+stage_2_1.enter(async (ctx) => {
     await ctx.reply('А теперь важная миссия! Получи оргазм или сдохни нахуй');
     await ctx.reply('Добавь продукты, которые тебе нравятся, или пропусти',
         Markup.inlineKeyboard([
@@ -122,14 +123,20 @@ function categories2MD(cats) {
 	if (row.length !== 0) {
 		arr.push(row);
 	}
+    arr.push([Markup.callbackButton('Идем дальше', 'return2Heated')]);
 	return arr;
 }
 
-stage_2_2.action('addFav', (ctx) => {
-    ctx.reply('Выбери категорию продуктов, которые вам нравится:',
+stage_2_1.action('addFav', async (ctx) => {
+    await ctx.reply('Выбери категорию продуктов, которые вам нравится:',
         Markup.inlineKeyboard(categories2MD(foodSet.likedCategoriesArray))
             .extra()
     )
+});
+
+stage_2_1.action('return2Heated', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_2_2')
 });
 
 function selectLikedCategory(cat) {
@@ -163,32 +170,148 @@ function products2MD(products) {
     if (row.length !== 0) {
         arr.push(row);
     }
-    arr.push([Markup.callbackButton('Вернуться', 'return2Cats')]);
+    arr.push([Markup.callbackButton('Вернуться к категориям', 'return2Cats')]);
     return arr;
 }
 
-stage_2_2.on('callback_query', (ctx) => {
+stage_2_1.on('callback_query', async (ctx) => {
 	if(foodSet.likedCategoriesArray.find(text => text === ctx.update.callback_query.data) !== undefined) {
-		selectLikedCategory(ctx.update.callback_query.data);
-		const prds = products2MD(foodSet.getLikedCategoryFood(ctx.update.callback_query.data));
-		 console.log(prds);
-		return ctx.editMessageText('Выберите любимые продукты: ',
+		await selectLikedCategory(ctx.update.callback_query.data);
+		const prds = await products2MD(foodSet.getLikedCategoryFood(ctx.update.callback_query.data));
+		await ctx.editMessageText('Выберите любимые продукты: ',
 			{reply_markup: { inline_keyboard: prds}}
 		);
 	} else if (ctx.update.callback_query.data === 'return2Cats' ) {
-		ctx.editMessageReplyMarkup(
+		await ctx.editMessageReplyMarkup(
         	Markup.inlineKeyboard(categories2MD(foodSet.likedCategoriesArray))
 		);
 	} else {
-		
+		const prod = ctx.update.callback_query.data;
+		if (foodSet.favouriteProducts.find(k => k === prod) === undefined) {
+			foodSet.addFavouriteProduct(prod);
+		} else {
+			foodSet.removeFavouriteProduct(prod);
+		}
+        const prds = await products2MD(foodSet.getLikedCategoryFood(foodSet.getCategoryByProduct(prod)));
+        await ctx.editMessageText('Выберите любимые продукты: ',
+            {reply_markup: { inline_keyboard: prds}}
+        );
 	}
+});
+
+// STAGE 2_2
+const stage_2_2 = new Scene('stage_2_2');
+stage_2_2.enter(async (ctx) => {
+    await ctx.reply('Теперь подумай, какие продукты исключить');
+    await ctx.reply('Убери нелюбимые продукты из своего ужина',
+        Markup.inlineKeyboard([
+            [Markup.callbackButton('Исключить нелюбимые', 'addHate')],
+            [Markup.callbackButton('Без учета нелюбимых продуктов', 'toSetPersonal')]
+        ])
+            .extra()
+    )
+});
+
+function categories2MDh(cats) {
+    const arr = []
+    let flag = true;
+    let row = [];
+    for (const cat of cats) {
+        row.push(Markup.callbackButton(cat, cat));
+        if (row.length == 3 && flag) {
+            arr.push(row);
+            row = [];
+            flag = false;
+        } else if (row.length == 2 && !flag) {
+            arr.push(row);
+            row = [];
+            flag = true;
+        }
+    }
+    if (row.length !== 0) {
+        arr.push(row);
+    }
+    arr.push([Markup.callbackButton('Идем дальше', 'toSetPersonal')]);
+    return arr;
+}
+
+stage_2_2.action('addHate', async (ctx) => {
+    await ctx.reply('Выбери категорию продуктов, которые вам НЕ нравится:',
+        Markup.inlineKeyboard(categories2MDh(foodSet.hatedCategoriesArray))
+            .extra()
+    )
+});
+
+stage_2_2.action('toSetPersonal', async (ctx) => {
+    await ctx.scene.leave();
+    await ctx.scene.enter('stage_3')
+});
+
+function selectHatedCategory(cat) {
+    if (cat.startsWith(check)) {
+        foodSet.hatedCategoriesArray[foodSet.hatedCategoriesArray.indexOf(cat)] = foodSet.hatedCategoriesArray[foodSet.hatedCategoriesArray.indexOf(cat)].substring(1);
+    } else {
+        foodSet.hatedCategoriesArray[foodSet.hatedCategoriesArray.indexOf(cat)] = except + foodSet.hatedCategoriesArray[foodSet.hatedCategoriesArray.indexOf(cat)];
+    }
+}
+
+function products2MDh(products) {
+    const arr = [];
+    let flag = true;
+    let row = [];
+    for (const prod of products) {
+        if (foodSet.hatedProducts.find(k => k === prod) !== undefined) {
+            row.push(Markup.callbackButton(except + prod, prod));
+        } else {
+            row.push(Markup.callbackButton(prod, prod));
+        }
+        if (row.length == 3 && flag) {
+            arr.push(row);
+            row = [];
+            flag = false;
+        } else if (row.length == 2 && !flag) {
+            arr.push(row);
+            row = [];
+            flag = true;
+        }
+    }
+    if (row.length !== 0) {
+        arr.push(row);
+    }
+    arr.push([Markup.callbackButton('Вернуться к категориям', 'return2Cats')]);
+    return arr;
+}
+
+stage_2_2.on('callback_query', async (ctx) => {
+    if(foodSet.hatedCategoriesArray.find(text => text === ctx.update.callback_query.data) !== undefined) {
+        await selectHatedCategory(ctx.update.callback_query.data);
+        const prds = await products2MDh(foodSet.getHatedCategoryFood(ctx.update.callback_query.data));
+        await ctx.editMessageText('Выберите нелюбимые продукты: ',
+            {reply_markup: { inline_keyboard: prds}}
+        );
+    } else if (ctx.update.callback_query.data === 'return2Cats' ) {
+        await ctx.editMessageReplyMarkup(
+            Markup.inlineKeyboard(categories2MDh(foodSet.hatedCategoriesArray))
+        );
+    } else {
+        const prod = ctx.update.callback_query.data;
+        if (foodSet.hatedProducts.find(k => k === prod) === undefined) {
+            foodSet.addHatedProduct(prod);
+        } else {
+            foodSet.removeHatedProduct(prod);
+        }
+        const prds = await products2MDh(foodSet.getHatedCategoryFood(foodSet.getCategoryByProduct(prod)));
+        await ctx.editMessageText('Выберите нелюбимые продукты: ',
+            {reply_markup: { inline_keyboard: prds}}
+        );
+    }
 });
 
 // ------------------------------------------------------------
 // Bot settings
 const bot = new Telegraf(config.token);
 
-const stage = new Stage([stage_1, stage_2, stage_2_2], { ttl: 10 })
+const stage = new Stage([stage_1, stage_2, stage_2_1, stage_2_2], { ttl: 10 })
 bot.use(session())
 bot.use(stage.middleware())
 
