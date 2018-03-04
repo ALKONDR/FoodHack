@@ -1,7 +1,7 @@
-export default class FoodSet {
+class FoodSet {
     constructor() {
         this.sets = require('./all-food').content;
-        this.categories = require('./goods.json').categories;
+        this.categories = require('./goods').categories;
 
         this.favouriteProducts = [];
         this.hatedProducts = []
@@ -78,3 +78,5 @@ export default class FoodSet {
         return goodSets[0];
     }
 }
+
+module.exports = FoodSet;

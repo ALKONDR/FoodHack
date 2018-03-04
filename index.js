@@ -9,6 +9,8 @@ const { enter, leave } = Stage
 
 const config = require('./config');
 const group = require('./orderSettings');
+const FoodSet = require('./FoodSet')
+const foodSet = new FoodSet();
 
 let approve = [Markup.callbackButton('Продолжить', JSON.stringify({approve: 'true'}))];
 
@@ -72,9 +74,9 @@ stage_1.on('callback_query', async (ctx, next) => {
 // STAGE 2
 const stage_2 = new Scene('stage_2')
 
-stage_2.enter((ctx) => {
-	ctx.reply('Молодец! Выбери из меню или под себя');
-	ctx.reply('Из меню или под себя',
+stage_2.enter(async (ctx) => {
+	await ctx.reply('Молодец! Выбери из меню или под себя');
+	await ctx.reply('Из меню или под себя',
         Markup.inlineKeyboard([
         	[Markup.callbackButton('Выбрать набор из меню', 'fromMenu')],
 			[Markup.callbackButton('Составь меню под себя', 'selectSet')]
@@ -83,11 +85,62 @@ stage_2.enter((ctx) => {
     )
 });
 
+stage_2.action('selectSet', async (ctx, next) => {
+	await ctx.scene.leave();
+	await ctx.scene.enter('stage_2_2')
+});
+
+// STAGE 2_2
+const stage_2_2 = new Scene('stage_2_2');
+stage_2_2.enter(async (ctx) => {
+    await ctx.reply('А теперь важная миссия! Получи оргазм или сдохни нахуй');
+    await ctx.reply('Добавь любимые или убери продукты',
+        Markup.inlineKeyboard([
+            [Markup.callbackButton('Добавить любимые', 'addFav')],
+            [Markup.callbackButton('Исключить нелюбимые', 'AddHate')]
+        ])
+            .extra()
+    )
+});
+
+function categories2MD(cats) {
+	const arr = []
+	let flag = true;
+	let row = [];
+	for (const cat of cats) {
+		row.push(Markup.callbackButton(cat, cat));
+		if (row.length == 3 && flag) {
+			arr.push(row);
+			row = [];
+			flag = false;
+		} else if (row.length == 2 && !flag) {
+            arr.push(row);
+            row = [];
+            flag = true;
+		}
+	}
+	if (row.length !== 0) {
+		arr.push(row);
+	}
+	return arr;
+}
+
+stage_2_2.action('addFav', (ctx) => {
+    ctx.reply('Выбери категорию продуктов, которые вам нравится:',
+        Markup.inlineKeyboard(categories2MD(foodSet.getFoodCategories()))
+            .extra()
+    )
+});
+
+stage_2_2.on('callback_query', async (ctx) => {
+	console.log(ctx.update.callback_query.data);
+});
+
 // ------------------------------------------------------------
 // Bot settings
 const bot = new Telegraf(config.token);
 
-const stage = new Stage([stage_1, stage_2], { ttl: 10 })
+const stage = new Stage([stage_1, stage_2, stage_2_2], { ttl: 10 })
 bot.use(session())
 bot.use(stage.middleware())
 
