@@ -2,6 +2,7 @@ module.exports = {
     "content": [
         {
             "type": "Классическое",
+            "telegraph": "http://telegra.ph/Klassicheskoe-03-04",
             "price":
             {
                 "3": {
@@ -133,6 +134,7 @@ module.exports = {
         },
         {
             "type": "Семейное",
+            "telegraph": "http://telegra.ph/Semejnoe-03-04",
             "price":
                 {
                     "3": {
@@ -250,6 +252,7 @@ module.exports = {
         },
         {
             "type": "Постное",
+            "telegraph": "http://telegra.ph/Postnoe-03-04",
             "price":
                 {
                     "3": {
@@ -369,6 +372,7 @@ module.exports = {
         },
         {
             "type": "Премиум",
+            "telegraph": "http://telegra.ph/Premium-03-04",
             "price":
                 {
                     "3": {
@@ -499,6 +503,7 @@ module.exports = {
         },
         {
             "type": "Фитнес",
+            "telegraph": "http://telegra.ph/Fitnes-03-04",
             "price":
                 {
                     "3": {
