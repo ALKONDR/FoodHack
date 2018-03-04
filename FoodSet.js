@@ -1,7 +1,8 @@
 class FoodSet {
     constructor() {
         this.sets = require('./all-food').content;
-        this.categories = require('./goods').categories;
+        this.likedCategories = require('./goods').categories;
+        this.hatedCategories = require('./goods').categories;
 
         this.favouriteProducts = [];
         this.hatedProducts = []
@@ -31,12 +32,20 @@ class FoodSet {
         return this.sets.find(rec => rec.type === set).content;
     }
 
-    getFoodCategories() {
-        return Object.keys(this.categories);
+    getLikedFoodCategories() {
+        return Object.keys(this.likedCategories);
     }
 
-    getCategoryFood(category) {
-        return this.categories[category];
+    getHatedFoodCategories() {
+        return Object.keys(this.hatedCategories);
+    }
+
+    getLikedCategoryFood(category) {
+        return this.likedCategories[category];
+    }
+
+    getHatedCategoryFood(category) {
+        return this.hatedCategories[category];
     }
 
     getBestSet() {
